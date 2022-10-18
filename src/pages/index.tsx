@@ -4,8 +4,9 @@ import { stripe } from "../lib/stripe"
 import Stripe from "stripe"
 import { useKeenSlider } from 'keen-slider/react'
 import { GetServerSideProps, GetStaticProps } from "next"
+import {Handbag} from 'phosphor-react'
 
-import { HomeContainer, Product } from '../styles/pages/home'
+import { AddToCart, HomeContainer, Product } from '../styles/pages/home'
 
 import 'keen-slider/keen-slider.min.css'
 import Link from "next/link"
@@ -40,8 +41,15 @@ export default function Home({ products }: HomeProps) {
                 <Image src={product.imageUrl} width={520} height={480} alt="" />
 
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <div>
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </div>
+                  <Link href="#">
+                    <AddToCart>
+                      <Handbag size={32}/>
+                    </AddToCart>
+                  </Link>
                 </footer>
               </Product>
             </Link>

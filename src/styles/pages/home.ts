@@ -44,14 +44,22 @@ export const Product = styled('a', {
     opacity: 0,
     transition: 'all 0.2s ease-in-out',
 
-    strong: {
-      fontSize: '$lg',
-    },
-
-    span: {
-      fontSize: '$xl',
-      fontWeight: 'bold',
-      color: '$green300',
+    div: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'left',
+    
+      strong: {
+        fontSize: '$lg',
+        lineHeight: '160%',
+      },
+      
+      span: {
+        fontSize: '$xl',
+        fontWeight: 'bold',
+        color: '$green300',
+        lineHeight: '140%',
+      },
     },
   },
 
@@ -60,5 +68,20 @@ export const Product = styled('a', {
       transform: 'translateY(0%)',
       opacity: 1,
     }
+  }
+})
+
+export const AddToCart = styled('div', {
+  width: 56,
+  height: 56,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '$green500',
+  borderRadius: 8,
+  transition: 'all 0.2s',
+
+  '&:hover': {
+    backgroundColor: '$green300',
   }
 })

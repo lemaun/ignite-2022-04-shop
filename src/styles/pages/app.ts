@@ -13,4 +13,24 @@ export const Header = styled('header', {
   width: '100%',
   maxWidth: 1180,
   margin: '0 auto',
+
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+export const CartIcon = styled('div', {
+  width: 48,
+  height: 48,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '$gray800',
+  borderRadius: 8,
+  transition: 'all 0.2s',
+  cursor: 'pointer',
+  color: '$gray500',
+
+  // '&:hover': {
+  //   backgroundColor: '$green500',
+  // }
 })
