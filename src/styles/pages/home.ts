@@ -13,7 +13,6 @@ export const Product = styled('a', {
   background: "linear-gradient(180deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: 8,
   position: 'relative',
-  cursor: 'pointer',
 
   display: 'flex',
   justifyContent: 'center',
@@ -21,6 +20,7 @@ export const Product = styled('a', {
 
   img: { 
     objectFit: 'cover',
+    cursor: 'pointer',
   },
 
   overflow: 'hidden',
@@ -48,7 +48,8 @@ export const Product = styled('a', {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
-    
+      cursor: 'pointer',
+
       strong: {
         fontSize: '$lg',
         lineHeight: '160%',
@@ -71,7 +72,7 @@ export const Product = styled('a', {
   }
 })
 
-export const AddToCart = styled('div', {
+export const AddToCart = styled('button', {
   width: 56,
   height: 56,
   display: 'flex',
@@ -80,6 +81,9 @@ export const AddToCart = styled('div', {
   backgroundColor: '$green500',
   borderRadius: 8,
   transition: 'all 0.2s',
+  color: 'white',
+  borderColor: 'transparent',
+  cursor: 'pointer',
 
   '&:hover': {
     backgroundColor: '$green300',

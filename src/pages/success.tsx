@@ -4,17 +4,14 @@ import Head from "next/head";
 import Link from "next/link";
 import Stripe from "stripe";
 import { stripe } from "../lib/stripe";
-import { ImageContainer, SuccessContainer } from "../styles/success";
+import { ImageContainer, ImageItem, SuccessContainer } from "../styles/success";
 
 interface SuccessProps {
   customerName: string
-  product: {
-    name: string
-    imageUrl: string
-  }
+  productImageList: string[]
 }
 
-export default function Success({ customerName, product }: SuccessProps) {
+export default function Success({ customerName, productImageList }: SuccessProps) {
   return (
     <>
       <Head> {/*VER nextSEO*/ }
@@ -24,9 +21,16 @@ export default function Success({ customerName, product }: SuccessProps) {
       <SuccessContainer>
         <h1>Compra efetuada!</h1>
         <ImageContainer>
-          <Image src={product.imageUrl} width={120} height={110} alt="" />
+
+          { productImageList.map((image, index) => {
+            return (
+              <ImageItem key={index}>
+                <Image src={image} width={120} height={110} alt="" />
+              </ImageItem>
+            )
+          }) }
         </ImageContainer>
-        <p>Uhuul <strong>{customerName}</strong>, sua <strong>{product.name}</strong> já está a caminho da sua casa.</p>
+        <p>Uhuul <strong>{customerName}</strong>, sua compra de <strong>{productImageList.length} camiseta(s)</strong> já está a caminho da sua casa.</p>
         
         <Link href="/">
           Voltar ao catálago
@@ -54,15 +58,22 @@ export const getServerSideProps:  GetServerSideProps = async ({ query }) => {
   })
 
   const customerName = session.customer_details.name
-  const product = session.line_items.data[0].price.product as Stripe.Product
+
+  const productImageList = session.line_items?.data.map((item) => {
+    const product = item.price?.product as Stripe.Product;
+    return product.images[0];
+  });
+
+  // const product = session.line_items.data[0].price.product as Stripe.Product
 
   return {
     props: {
       customerName,
-      product: {
-        name: product.name,
-        imageUrl: product.images[0],
-      }
+      productImageList,
+      // product: {
+      //   name: product.name,
+      //   imageUrl: product.images[0],
+      // }
     }
   }
 }

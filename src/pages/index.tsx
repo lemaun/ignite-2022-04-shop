@@ -5,6 +5,8 @@ import Stripe from "stripe"
 import { useKeenSlider } from 'keen-slider/react'
 import { GetServerSideProps, GetStaticProps } from "next"
 import {Handbag} from 'phosphor-react'
+import { useShoppingCart } from "use-shopping-cart";
+import { toast } from "react-toastify";
 
 import { AddToCart, HomeContainer, Product } from '../styles/pages/home'
 
@@ -21,6 +23,27 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
+  
+  const { addItem, cartDetails } = useShoppingCart()
+  const entries = [] as any[];
+
+  for (const id in cartDetails) {
+    const entry = cartDetails[id];
+    entries.push(entry);
+  }
+
+  function handlerAddProduct(product: any) {
+    const existProduct = entries.filter((element) => element.id === product.id);
+    if (existProduct.length > 0) {
+      return toast.warning("Já existe esse produto no carrinho!");
+    }
+
+    addItem(product);
+
+    toast.success("Produto adicionado no carrinho!");
+  }
+
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 2,
@@ -36,23 +59,23 @@ export default function Home({ products }: HomeProps) {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map(product => {
           return (
-            <Link key={product.id} href={`/product/${product.id}`} prefetch={false}>
-              <Product className="keen-slider__slide">
-                <Image src={product.imageUrl} width={520} height={480} alt="" />
+            <Product key={product.id} className="keen-slider__slide">
+                <Link href={`/product/${product.id}`} prefetch={false}>
+                  <Image src={product.imageUrl} width={520} height={480} alt="" />
+                </Link>
 
                 <footer>
                   <div>
                     <strong>{product.name}</strong>
                     <span>{product.price}</span>
                   </div>
-                  <Link href="#">
-                    <AddToCart>
-                      <Handbag size={32}/>
-                    </AddToCart>
-                  </Link>
+                  
+                  <AddToCart onClick={() => handlerAddProduct(product)}>
+                    <Handbag size={32}/>
+                  </AddToCart>
+                  
                 </footer>
               </Product>
-            </Link>
           )
         })}
       </HomeContainer>
